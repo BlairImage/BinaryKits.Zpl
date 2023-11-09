@@ -15,6 +15,31 @@
         public bool AddDefaultLabelHome { get; set; }
 
         /// <summary>
+        /// Overrides default label darkness if set ~SD
+        /// </summary>
+        public int? Darkness { get; set; }
+
+        /// <summary>
+        /// Offset to move label content up and down ^LT
+        /// </summary>
+        public int? TopOffset { get; set; }
+
+        /// <summary>
+        /// Offset to move label content left and right ^LS
+        /// </summary>
+        public int? LeftOffset { get; set; }
+
+        /// <summary>
+        /// Sets the label width ^PW
+        /// </summary>
+        public int? LabelWidth { get; set; }
+
+        /// <summary>
+        /// The number of copies of a label that should be printed
+        /// </summary>
+        public int? QtyToPrint { get; set; }
+
+        /// <summary>
         /// ^CI
         /// </summary>
         public string ChangeInternationalFontEncoding { get; set; }
@@ -55,6 +80,7 @@
             AddDefaultLabelHome = true;
             ChangeInternationalFontEncoding = ZplConstants.InternationalFontEncoding.CI28;
             SourcePrintDpi = TargetPrintDpi = 203;
+            Darkness = 30;
         }
     }
 }

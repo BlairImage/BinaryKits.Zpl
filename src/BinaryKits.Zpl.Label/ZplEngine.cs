@@ -31,11 +31,33 @@ namespace BinaryKits.Zpl.Label
             {
                 result.Add("^XA");
             }
-
+            if (context.Darkness != null)
+            {
+                result.Add($"^~SD{context.Darkness}");
+            }
             if (context.AddDefaultLabelHome)
             {
                 result.Add("^LH0,0");
             }
+
+            if (context.LabelWidth != null)
+            {
+                result.Add($"^PW{context.LabelWidth}");
+            }
+            if (context.QtyToPrint != null)
+            {
+                result.Add($"^PQ{context.QtyToPrint}");
+            }
+
+            if (context.TopOffset != null && context.TopOffset != 0)
+            {
+                result.Add($"^LT{context.TopOffset}");
+            }
+            if (context.LeftOffset != null && context.LeftOffset != 0)
+            {
+                result.Add($"^LS{context.LeftOffset}");
+            }
+
 
             result.Add(context.ChangeInternationalFontEncoding);
 
