@@ -1,6 +1,22 @@
 ﻿namespace BinaryKits.Zpl.Label
 {
     /// <summary>
+    /// Media Type for the label
+    /// </summary>
+    public enum LabelMediaType
+    {
+        /// <summary>
+        /// Thermal Transfer media
+        /// </summary>
+        ThermalTransfer = 'T',
+        /// <summary>
+        /// Direct Thermal media
+        /// </summary>
+        DirectThermal = 'D',
+    }
+
+
+    /// <summary>
     /// Holding rendering settings
     /// </summary>
     public class ZplRenderOptions
@@ -22,12 +38,12 @@
         /// <summary>
         /// Offset to move label content up and down ^LT
         /// </summary>
-        public int? TopOffset { get; set; }
+        public int TopOffset { get; set; }
 
         /// <summary>
         /// Offset to move label content left and right ^LS
         /// </summary>
-        public int? LeftOffset { get; set; }
+        public int LeftOffset { get; set; }
 
         /// <summary>
         /// Sets the label width ^PW
@@ -38,6 +54,12 @@
         /// The number of copies of a label that should be printed
         /// </summary>
         public int? QtyToPrint { get; set; }
+
+        /// <summary>
+        /// Media Type for the label
+        /// ^MT
+        /// </summary>
+        public LabelMediaType? MediaType { get; set; }
 
         /// <summary>
         /// ^CI

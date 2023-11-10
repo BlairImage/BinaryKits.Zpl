@@ -35,6 +35,12 @@ namespace BinaryKits.Zpl.Label
             {
                 result.Add($"^~SD{context.Darkness}");
             }
+
+            if (context.MediaType != null)
+            {
+                result.Add($"^MT{(char)context.MediaType}");
+            }
+
             if (context.AddDefaultLabelHome)
             {
                 result.Add("^LH0,0");
@@ -44,20 +50,9 @@ namespace BinaryKits.Zpl.Label
             {
                 result.Add($"^PW{context.LabelWidth}");
             }
-            if (context.QtyToPrint != null)
-            {
-                result.Add($"^PQ{context.QtyToPrint}");
-            }
 
-            if (context.TopOffset != null && context.TopOffset != 0)
-            {
-                result.Add($"^LT{context.TopOffset}");
-            }
-            if (context.LeftOffset != null && context.LeftOffset != 0)
-            {
-                result.Add($"^LS{context.LeftOffset}");
-            }
-
+            result.Add($"^LT{context.TopOffset}");
+            result.Add($"^LS{context.LeftOffset}");
 
             result.Add(context.ChangeInternationalFontEncoding);
 
@@ -88,6 +83,11 @@ namespace BinaryKits.Zpl.Label
                 {
                     result.AddRange(element.Render(context));
                 }
+            }
+
+            if (context.QtyToPrint != null)
+            {
+                result.Add($"^PQ{context.QtyToPrint}");
             }
 
             if (context.AddStartEndFormat)
