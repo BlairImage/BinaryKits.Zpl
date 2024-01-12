@@ -1,5 +1,4 @@
 using BarcodeLib;
-using BarcodeStandard;
 using BinaryKits.Zpl.Label.Elements;
 using BinaryKits.Zpl.Viewer.Helpers;
 using SkiaSharp;
@@ -32,22 +31,22 @@ namespace BinaryKits.Zpl.Viewer.ElementDrawers
 
                 float labelFontSize = Math.Min(barcode.ModuleWidth * 7.2f, 72f);
                 var labelTypeFace = options.FontLoader("A");
-                SKFont labelFont = new SKFont(labelTypeFace, labelFontSize);
-                var labelSystemFont = labelFont.ToSystemDrawingFont();
-                int labelHeight = barcode.PrintInterpretationLine ? labelSystemFont.Height : 0;
+                var labelFont = new SKFont(labelTypeFace, labelFontSize).ToSystemDrawingFont();
+                int labelHeight = barcode.PrintInterpretationLine ? labelFont.Height : 0;
                 int labelHeightOffset = barcode.PrintInterpretationLineAboveCode ? labelHeight : 0;
 
                 var barcodeElement = new Barcode
                 {
                     BarWidth = barcode.ModuleWidth,
-                    BackColor = new SKColorF(Color.Transparent.R, Color.Transparent.G, Color.Transparent.B, Color.Transparent.A),
+                    BackColor = Color.Transparent,
                     Height = barcode.Height + labelHeight,
                     IncludeLabel = barcode.PrintInterpretationLine,
+                    LabelPosition = barcode.PrintInterpretationLineAboveCode ? LabelPositions.TOPCENTER : LabelPositions.BOTTOMCENTER,
                     LabelFont = labelFont
                 };
 
-                using var image = barcodeElement.Encode(BarcodeStandard.Type.Interleaved2Of5, barcode.Content);
-                this.DrawBarcode(barcodeElement.GetImageData(SaveTypes.Unspecified), barcode.Height, image.Width, barcode.FieldOrigin != null, x, y, labelHeightOffset, barcode.FieldOrientation);
+                using var image = barcodeElement.Encode(TYPE.Interleaved2of5, barcode.Content);
+                this.DrawBarcode(this.GetImageData(image), barcode.Height, image.Width, barcode.FieldOrigin != null, x, y, labelHeightOffset, barcode.FieldOrientation);
             }
         }
     }

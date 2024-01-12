@@ -1,5 +1,4 @@
 using BarcodeLib;
-using BarcodeStandard;
 using BinaryKits.Zpl.Label.Elements;
 using BinaryKits.Zpl.Viewer.Helpers;
 using SkiaSharp;
@@ -17,11 +16,11 @@ namespace BinaryKits.Zpl.Viewer.ElementDrawers
         /// Start sequence lookups.
         /// <see href="https://supportcommunity.zebra.com/s/article/Creating-GS1-Barcodes-with-Zebra-Printers-for-Data-Matrix-and-Code-128-using-ZPL"/>
         /// </summary>
-        private static readonly Dictionary<string, BarcodeStandard.Type> startCodeMap = new Dictionary<string, BarcodeStandard.Type>()
+        private static readonly Dictionary<string, TYPE> startCodeMap = new Dictionary<string, TYPE>()
         {
-            { ">9", BarcodeStandard.Type.Code128A },
-            { ">:", BarcodeStandard.Type.Code128B },
-            { ">;", BarcodeStandard.Type.Code128C }
+            { ">9", TYPE.CODE128A },
+            { ">:", TYPE.CODE128B },
+            { ">;", TYPE.CODE128C }
         };
 
         private static readonly Regex startCodeRegex = new Regex(@"^(>[9:;])(.+)$", RegexOptions.Compiled);
@@ -47,7 +46,7 @@ namespace BinaryKits.Zpl.Viewer.ElementDrawers
         {
             if (element is ZplBarcode128 barcode)
             {
-                var barcodeType = BarcodeStandard.Type.Code128B;
+                var barcodeType = TYPE.CODE128B;
                 // remove any start sequences not at the start of the content (invalid invocation)
                 string content = invalidInvocationRegex.Replace(barcode.Content, "");
                 string interpretation = content;
@@ -67,11 +66,11 @@ namespace BinaryKits.Zpl.Viewer.ElementDrawers
                 }
                 else if (barcode.Mode == "A")
                 {
-                    barcodeType = BarcodeStandard.Type.Code128; // dynamic
+                    barcodeType = TYPE.CODE128; // dynamic
                 }
                 else if (barcode.Mode == "D")
                 {
-                    barcodeType = BarcodeStandard.Type.Code128C;
+                    barcodeType = TYPE.CODE128C;
                     content = content.Replace(">8", FNC1);
                     interpretation = interpretation.Replace(">8", "");
                     if (!content.StartsWith(FNC1))
@@ -81,7 +80,7 @@ namespace BinaryKits.Zpl.Viewer.ElementDrawers
                 }
                 else if (barcode.Mode == "U")
                 {
-                    barcodeType = BarcodeStandard.Type.Code128C;
+                    barcodeType = TYPE.CODE128C;
                     content = content.PadLeft(19, '0').Substring(0, 19);
                     int checksum = 0;
                     for (int i = 0; i < 19; i++)
@@ -97,23 +96,23 @@ namespace BinaryKits.Zpl.Viewer.ElementDrawers
 
                 float labelFontSize = Math.Min(barcode.ModuleWidth * 7.2f, 72f);
                 var labelTypeFace = options.FontLoader("A");
-                SKFont labelFont = new SKFont(labelTypeFace, labelFontSize);
-                var labelSystemFont = labelFont.ToSystemDrawingFont();
-                int labelHeight = barcode.PrintInterpretationLine ? labelSystemFont.Height : 0;
+                var labelFont = new SKFont(labelTypeFace, labelFontSize).ToSystemDrawingFont();
+                int labelHeight = barcode.PrintInterpretationLine ? labelFont.Height : 0;
                 int labelHeightOffset = barcode.PrintInterpretationLineAboveCode ? labelHeight : 0;
 
                 var barcodeElement = new Barcode
                 {
                     BarWidth = barcode.ModuleWidth,
-                    BackColor = new SKColorF(Color.Transparent.R, Color.Transparent.G, Color.Transparent.B, Color.Transparent.A),
+                    BackColor = Color.Transparent,
                     Height = barcode.Height + labelHeight,
                     IncludeLabel = barcode.PrintInterpretationLine,
+                    LabelPosition = barcode.PrintInterpretationLineAboveCode ? LabelPositions.TOPCENTER : LabelPositions.BOTTOMCENTER,
                     LabelFont = labelFont,
                     AlternateLabel = interpretation
                 };
 
                 using var image = barcodeElement.Encode(barcodeType, content);
-                this.DrawBarcode(barcodeElement.GetImageData(SaveTypes.Unspecified), barcode.Height, image.Width, barcode.FieldOrigin != null, x, y, labelHeightOffset, barcode.FieldOrientation);
+                this.DrawBarcode(this.GetImageData(image), barcode.Height, image.Width, barcode.FieldOrigin != null, x, y, labelHeightOffset, barcode.FieldOrientation);
             }
         }
     }
