@@ -23,8 +23,8 @@ namespace BinaryKits.Zpl.Viewer.ElementDrawers
             var typeface = SKTypeface.Default;
             if (fontName == "0")
             {
-                //typeface = SKTypeface.FromFile(@"swiss-721-black-bt.ttf");
-                typeface = SKTypeface.FromFamilyName("Helvetica", SKFontStyleWeight.Bold, SKFontStyleWidth.SemiCondensed, SKFontStyleSlant.Upright);
+                typeface = SKTypeface.FromFile(@"Swiss 721 Black BT.ttf");
+                //typeface = SKTypeface.FromFamilyName("Helvetica", SKFontStyleWeight.Bold, SKFontStyleWidth.SemiCondensed, SKFontStyleSlant.Upright);
             }
             else
             {

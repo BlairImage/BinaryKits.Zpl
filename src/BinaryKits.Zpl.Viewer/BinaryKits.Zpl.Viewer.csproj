@@ -50,4 +50,10 @@
     <ProjectReference Include="..\BinaryKits.Zpl.Label\BinaryKits.Zpl.Label.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Swiss 721 Black BT.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
