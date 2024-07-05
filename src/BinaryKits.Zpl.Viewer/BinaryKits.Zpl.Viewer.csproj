@@ -51,7 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Swiss 721 Black BT.ttf">
+    <None Update="ATTriumvirate-CondensedBold.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
