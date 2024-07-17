@@ -23,8 +23,13 @@ namespace BinaryKits.Zpl.Viewer.ElementDrawers
             var typeface = SKTypeface.Default;
             if (fontName == "0")
             {
-                typeface = SKTypeface.FromFile(@"ATTriumvirate-CondensedBold.ttf");
-                //typeface = SKTypeface.FromFamilyName("Helvetica", SKFontStyleWeight.Bold, SKFontStyleWidth.SemiCondensed, SKFontStyleSlant.Upright);
+                var currentPath = System.IO.Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+                var path = System.IO.Path.Join(currentPath, @"ATTriumvirate-CondensedBold.ttf");
+
+                typeface = SKTypeface.FromFile(path);
+
+                if (typeface is null)
+                    typeface = SKTypeface.FromFamilyName("Helvetica", SKFontStyleWeight.Bold, SKFontStyleWidth.SemiCondensed, SKFontStyleSlant.Upright);
             }
             else
             {

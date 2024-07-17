@@ -22,6 +22,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ATTriumvirate-CondensedBold.ttf" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="BarcodeLib" Version="2.4.0" />
     <PackageReference Include="SkiaSharp" Version="2.88.7" />
     <PackageReference Include="SkiaSharp.HarfBuzz" Version="2.88.7" />
@@ -51,9 +55,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="ATTriumvirate-CondensedBold.ttf">
+    <Content Include="ATTriumvirate-CondensedBold.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Content>
   </ItemGroup>
 
 </Project>
